@@ -1,0 +1,12 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"main": "server.js",
+	"repository": "https://github.com/rippleTv/backend.git",
+	"author": "Somtozech <ezechinnaemeka@gmail.com>",
+	"scripts": {
+		"start": "node server.js",
+		"dev": "nodemon server.js"
+	},
+	"license": "MIT"
+}
