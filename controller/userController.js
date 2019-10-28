@@ -19,23 +19,33 @@ function AuthController() {
   this.loginUser = (req, res, next) => {
     loginUser(req.body)
       .then(result => {
-        return res.status(result.status).send({
-          data: {
-            email: req.body.email,
-            password: req.body.password,
-            token
-          },
-          message: result.message,
-          error: null
-        });
+        if (result.status >= 400) {
+          return res.status(result.status).send({
+            data: null,
+            message: result.message,
+            error: null
+          });
+        }
+
+        if (result.status === 200) {
+          const data = {};
+          data.email = result.user.email;
+          data.role = result.user.role;
+          const token = jwtGeneration(data);
+          console.log(result);
+          return res.status(result.status).send({
+            data: {
+              ...data,
+              token
+            },
+            message: result.message,
+            error: null
+          });
+        }
       })
       .catch(error => {
         next(error);
       });
-    let data = {};
-    data.email = loginUser.email;
-    data.password = loginUser.password;
-    const token = jwtGeneration(data);
   };
 }
 

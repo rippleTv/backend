@@ -64,7 +64,7 @@ const loginUser = function(Body) {
             message: "Auth Failed. Email or password is incorrect"
           };
         }
-        return { status: 200, message: "Successfully logged in" };
+        return { status: 200, message: "Successfully logged in", user };
       });
     })
     .catch(error => {
