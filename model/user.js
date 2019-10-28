@@ -1,55 +1,60 @@
-const mongoose = require('mongoose');
-const Joi = require('joi');
-// const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const Joi = require("joi");
+const bcrypt = require("bcryptjs");
+
+const { schemaForLogin, schemaForSignup } = require("./schema");
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       lowercase: true,
-      required: [true, 'Username is required']
+      required: [true, "Username is required"]
     },
 
     email: {
       type: String,
       lowercase: true,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true
     },
     password: {
       type: String,
-      required: [true, 'Password is required']
-    },
-    password2: {
-      type: String,
-      required: [true, 'Password2 is required']
+      required: [true, "Password is required"]
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
+      enum: ["user", "admin"],
       lowercase: true,
-      default: 'user'
+      default: "user"
     }
   },
+
   { timestamps: true }
 );
 
+// hash password before saving user
+userSchema.pre("save", function(next) {
+  const saltRounds = 10;
+  bcrypt
+    .hash(this.password, saltRounds)
+    .then(hash => {
+      this.password = hash;
+      next();
+    })
+    .catch(err => next(err));
+});
 
+userSchema.statics.joiValidate = function(obj) {
+  return Joi.validate(obj, schemaForSignup);
+};
 
-userSchema.methods.joiValidate = function(obj) {
-	
-	return Joi.validate(obj, schema);
-}
+userSchema.statics.joiValidateLogin = function(obj) {
+  return Joi.validate(obj, schemaForLogin);
+};
 
-const schema = {
-  name: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string().alphanum().min(8).max(30).regex(/[a-zA-Z0-9]{3,30}/).required(),
-  // password2: Joi.equal(schema.password).required(),
-  email: Joi.string().email().required(),
-  role: Joi.string().allow().min(4).max(10)
+userSchema.methods.comparePassword = function(plainPassword) {
+  return bcrypt.compare(plainPassword, this.password).then(match => match);
+};
 
-}
-
-
-
-module.exports = mongoose.model("user", userSchema)
+module.exports = mongoose.model("user", userSchema);
