@@ -5,7 +5,7 @@
 	"repository": "https://github.com/rippleTv/backend.git",
 	"author": "Somtozech <ezechinnaemeka@gmail.com>",
 	"scripts": {
-		"start": "node server.js",
+		"start": "nodemon server.js",
 		"dev": "nodemon server.js"
 	},
 	"license": "MIT",
