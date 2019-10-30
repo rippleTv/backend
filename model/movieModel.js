@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const moviesSchema = new mongoose.Schema({
   name: {
     type: String,
-    lowercase: true,
+    //lowercase: true,
     required: [true, "The name of the movie is required"]
   },
 
@@ -26,12 +26,12 @@ const moviesSchema = new mongoose.Schema({
     required: [true, "The release year of the movie is required"]
   },
 
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    lowercase: true,
-    default: "user"
-  }
+  // role: {
+  //   type: String,
+  //   enum: ["user", "admin"],
+  //   lowercase: true,
+  //   default: "user"
+  // }
   //{ timestamps: true }
 });
 const Movies = mongoose.model("Movies", moviesSchema);

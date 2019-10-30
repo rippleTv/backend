@@ -1,9 +1,6 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/index");
-const role = {
-    Admin:"admin",
-    User:"user"
-}
+const jwt = require("jsonwebtoken")
+
+let decoded;
 
 exports.auth = (req, res, next)=> {
   const token = req.header("x-auth-token");
@@ -13,9 +10,13 @@ exports.auth = (req, res, next)=> {
   }
 
   try {
-    const decoded = jwt.verify(token, config.JWT_KEY);
-    //req.token = token;
+     decoded = jwt.verify(token, "jwtPrivateKey");
+    req.token = token;
     req.user = decoded.user;
+    //console.log(decoded)
+    //console.log(decoded["role"])
+    console.log(decoded["user"])
+      
     next();
   } catch (err) {
     res.status(401).json({ msg: "Token is not valid" });
@@ -24,17 +25,19 @@ exports.auth = (req, res, next)=> {
 
 ;
 exports.authRoles =  (req, res, next)=> {
-  const token = req.header("x-auth-token");
-//   console.log(req.body.role);
-//   console.log(role["Admin"]);
+  //const token = req.header("x-auth-token");
+const role = {
+  Admin: "admin",
+  User: "user"
+};
 
-  if (req.body.role !== role["Admin"]) {
-    return res
-      .status(401)
-      .json({
-        message:
-          " Sorry, Only Admins can access this feature"
-      });
+//   console.log(req.body.role);
+// console.log(role["Admin"]);
+
+  if (decoded.role !== role.Admin) {
+    return res.status(401).json({
+      message: " Sorry, Only Admins can access this feature"
+    });
   }
   next();
 };
