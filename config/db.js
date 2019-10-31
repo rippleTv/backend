@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+
 function initDb(){
-    mongoose.connect("mongodb://127.0.0.1:27017/RippleTv", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
+    mongoose.connect("mongodb://127.0.0.1:27017/RippleTv", { useNewUrlParser: true, 
+    useCreateIndex: true, useUnifiedTopology: true,
+useFindAndModify:false },
      function (error){
         if(error){
             console.log('Not connected to Database...');

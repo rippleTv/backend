@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const Router = express.Router();
+const movieRoutes = require("./routes/moviesRoute");
 
 const appRoutes = require("./routes");
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger("dev"));
 
 app.use("/api", appRoutes(Router));
+//app.use("/api/movie", movieRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not Found");

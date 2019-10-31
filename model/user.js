@@ -56,5 +56,4 @@ userSchema.statics.joiValidateLogin = function(obj) {
 userSchema.methods.comparePassword = function(plainPassword) {
   return bcrypt.compare(plainPassword, this.password).then(match => match);
 };
-
 module.exports = mongoose.model("user", userSchema);
