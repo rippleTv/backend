@@ -1,11 +1,12 @@
-const userRoute = require("./userRoute");
-const movieRoute = require("./moviesRoute");
-const router = require("express").Router();
+const router = require('express').Router();
+
+const userRoute = require('./userRoute');
+const subscriptionRoute = require('./subscription');
 
 module.exports = function(router) {
-  router.use("/user", userRoute());
-
+	router.use('/user', userRoute());
+	router.use('/subscription', subscriptionRoute());
   router.use("/movie", movieRoute());
-
-  return router;
+  
+	return router;
 };
