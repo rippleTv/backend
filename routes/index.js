@@ -5,7 +5,8 @@ const subscriptionRoute = require('./subscription');
 
 module.exports = function(router) {
 	router.use('/user', userRoute());
-
 	router.use('/subscription', subscriptionRoute());
+  router.use("/movie", movieRoute());
+  
 	return router;
 };
