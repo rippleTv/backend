@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/custom-environment -variable.json");
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 //JWT generation
 exports.jwtGeneration = user => {
-  const token = jwt.sign(user, "jwtPrivateKey", {
-    expiresIn: "30d"
-  });
-  return token;
+	const token = jwt.sign(user, config.JWT_KEY, {
+		expiresIn: '30d'
+	});
+	return token;
 };
