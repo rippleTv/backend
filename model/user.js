@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const bcrypt = require('bcryptjs');
+const uuidv4 = require('uuid/v4');
 
 const { schemaForLogin, schemaForSignup } = require('./schema');
 
@@ -34,7 +35,9 @@ const userSchema = new mongoose.Schema(
 			current_period_start: { type: Date },
 			current_period_end: { type: Date },
 			createdAt: { type: Date }
-		}
+		},
+		verification_code: { type: String, default: uuidv4() },
+		isVerified: { type: Boolean, default: false }
 	},
 
 	{ timestamps: true }
@@ -65,4 +68,3 @@ userSchema.methods.comparePassword = function(plainPassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-
