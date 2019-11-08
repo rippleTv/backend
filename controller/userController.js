@@ -5,7 +5,7 @@ const { sendConfirmEmailMessage } = require('../services/mailer');
 function AuthController() {
 	this.registerUser = async (req, res, next) => {
 		const result = await registerUser(req.body);
-		await sendConfirmEmailMessage(result.user);
+		if (result.user) await sendConfirmEmailMessage(result.user);
 		return res.status(result.status).send({
 			data: null,
 			message: result.message,

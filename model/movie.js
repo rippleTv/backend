@@ -5,6 +5,7 @@ const moviesSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'The name of the movie is required']
 	},
+	poster: { type: String, required: [true, 'Poster image required'] },
 	publicId: { type: String, required: [true, 'Cloudinary public id required'] },
 	poster: { type: String, required: [true, 'Poster Image for video required'] },
 	genre: {
@@ -33,8 +34,7 @@ const moviesSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'The movie category is required']
 	},
-	duration: { type: Date, required: [true, 'Movie Duration is required'] },
-	releaseDate: {
+	releaseYear: {
 		type: Number,
 		required: [true, 'The release date of the movie is required']
 	}

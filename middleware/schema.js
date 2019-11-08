@@ -20,3 +20,20 @@ exports.subscriptionSchema = Joi.object().keys({
 		.min(4)
 		.required()
 });
+
+exports.movieSchema = Joi.object().keys({
+	name: Joi.string()
+		.min(2)
+		.required(),
+	poster: Joi.string()
+		.min(4)
+		.required(),
+	genre: Joi.string()
+		.min(3)
+		.required(),
+	description: Joi.string(),
+	url: Joi.string()
+		.min(5)
+		.required(),
+	releaseYear: Joi.number().required()
+});
