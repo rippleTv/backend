@@ -34,7 +34,8 @@ const userSchema = new mongoose.Schema(
 			plan_id: { type: String },
 			current_period_start: { type: Date },
 			current_period_end: { type: Date },
-			createdAt: { type: Date }
+			createdAt: { type: Date },
+			expiresAt: { type: Date }
 		},
 		verification_code: { type: String, default: uuidv4() },
 		isVerified: { type: Boolean, default: false }

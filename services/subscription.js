@@ -42,7 +42,9 @@ async function savePlan(plan) {
 }
 
 async function subscribeUser(body) {
-	const user = await User.findOne({ email: body.email });
+	const user = await User.findOne({ email: body.email }).select(
+		'name email subscription role isVerified'
+	);
 	if (user) {
 		const customer = await stripe.customers.create({
 			source: body.token, // Token retrieved from Elements, Checkout, or native SDKs.
@@ -54,8 +56,11 @@ async function subscribeUser(body) {
 			plan: body.plan_id
 		});
 
+		const date = new Date();
+
 		user.subscription.customer_id = customer.id;
-		user.subscription.created = subscription.created;
+		user.subscription.createdAt = date;
+		user.subscription.expiresAt = new Date(date.setMonth(date.getMonth() + 1));
 		user.subscription.current_period_end = subscription.current_period_end;
 		user.subscription.current_period_start = subscription.current_period_start;
 		user.subscription.plan_id = body.plan_id;

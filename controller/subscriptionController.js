@@ -44,7 +44,8 @@ function SubscriptionController() {
 		const response = await subscribeUser(body);
 
 		return res.status(200).send({
-			message: response.status
+			message: 'Subscribed user successfully',
+			data: response
 		});
 	};
 }

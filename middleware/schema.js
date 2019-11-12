@@ -16,10 +16,10 @@ exports.planSchema = Joi.object().keys({
 });
 
 exports.subscriptionSchema = Joi.object().keys({
-	plan_id: Joi.string()
+	token: Joi.string()
 		.min(4)
 		.required(),
-	token: Joi.string()
+	plan_id: Joi.string()
 		.min(4)
 		.required()
 });
