@@ -25,6 +25,7 @@ async function createPlan(plan) {
 async function savePlan(plan) {
 	const newPlan = new Plan({
 		name: plan.name,
+		description: plan.description,
 		amount: plan.amount,
 		interval: plan.interval,
 		plan_id: plan.id,

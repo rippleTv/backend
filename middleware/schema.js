@@ -9,6 +9,9 @@ exports.planSchema = Joi.object().keys({
 		.required(),
 	interval: Joi.string()
 		.valid('day', 'week', 'month', 'year')
+		.required(),
+	description: Joi.string()
+		.min(4)
 		.required()
 });
 

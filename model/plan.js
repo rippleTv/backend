@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const planSchema = new mongoose.Schema({
 	name: { type: String, required: [true, 'Name of Plan is required'] },
+	description: {
+		type: String,
+		required: [true, 'Description of Plan Required']
+	},
 	amount: { type: Number, required: [true, 'Amount for Plan is required'] },
 	interval: {
 		type: String,

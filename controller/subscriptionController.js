@@ -8,7 +8,7 @@ function SubscriptionController() {
 	this.createPlan = async (req, res, next) => {
 		let data = await createPlan(req.body);
 
-		//if request to save plan to paystack was unsuccessful
+		//if request to save plan was unsuccessful
 		if (!data) {
 			return res.status(400).send({
 				error: null,
@@ -18,6 +18,7 @@ function SubscriptionController() {
 
 		//since stripe doesn't return plan name, i add it here to create a copy in database
 		data.name = req.body.name;
+		data.description = req.body.description;
 
 		const plan = await savePlan(data);
 		return res.status(200).send({
