@@ -4,6 +4,11 @@ const config = require('../config');
 
 const stripe = require('stripe')(config.STRIPE_SECRET_KEY);
 
+async function getPlans(plan) {
+	const plans = await Plan.find();
+	return plans;
+}
+
 async function createPlan(plan) {
 	const newPlan = await stripe.plans.create({
 		amount: plan.amount,
@@ -63,5 +68,6 @@ async function subscribeUser(body) {
 module.exports = {
 	savePlan,
 	createPlan,
-	subscribeUser
+	subscribeUser,
+	getPlans
 };

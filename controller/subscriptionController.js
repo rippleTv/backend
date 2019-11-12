@@ -1,10 +1,17 @@
 const {
 	createPlan,
 	savePlan,
-	subscribeUser
+	subscribeUser,
+	getPlans
 } = require('../services/subscription');
 
 function SubscriptionController() {
+	this.getPlans = async (req, res, next) => {
+		let plans = await getPlans();
+		res.status(200).json({
+			data: plans
+		});
+	};
 	this.createPlan = async (req, res, next) => {
 		let data = await createPlan(req.body);
 

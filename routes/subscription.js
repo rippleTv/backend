@@ -8,6 +8,7 @@ const {
 const { authenticate } = require('../middleware/auth');
 
 module.exports = () => {
+	router.get('/plans', authenticate, SubscriptionController.getPlans);
 	router.post(
 		'/plan',
 		[authenticate, validatePlan],
