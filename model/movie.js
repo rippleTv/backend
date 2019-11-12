@@ -15,20 +15,7 @@ const moviesSchema = new mongoose.Schema({
 	},
 	description: { type: String },
 	url: { type: String, required: [true, 'Movie url is required'] },
-	transformation: {
-		dash: {
-			url: {
-				type: String,
-				required: [true, 'Dash manifest for video required']
-			}
-		},
-		hls: {
-			url: {
-				type: String,
-				required: [true, 'HLS format for video required']
-			}
-		}
-	},
+	dash: { type: String, required: true },
 	bytes: { type: Number, required: [true, 'Number of bytes for movie'] },
 	category: {
 		type: String,

@@ -26,7 +26,7 @@ async function authenticate(req, res, next) {
 		const decoded = jwt.verify(token, config.JWT_KEY);
 		const user = await User.findOne({
 			email: decoded.email
-		});
+		}).select('name role email subscription isVerified');
 		//if user does not exist in database
 		if (!user) {
 			return res.status(401).send({
@@ -36,7 +36,7 @@ async function authenticate(req, res, next) {
 			});
 		}
 
-		req.user = decoded;
+		req.user = user;
 		next();
 	} catch (error) {
 		console.log(error);

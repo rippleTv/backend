@@ -26,12 +26,12 @@ exports.getMovie = async (req, res) => {
 
 //Post / Upload a movie
 exports.uploadMovie = async (req, res) => {
-	const movie = await movieServices.addMovie(req.body, movie => {
-		res.status(201).json({
-			message: 'Movie was successfully uploaded!',
-			status: 'success',
-			data: movie
-		});
+	const movie = await movieServices.addMovie(req.body);
+
+	res.status(201).json({
+		message: 'Movie was successfully uploaded!',
+		status: 'success',
+		data: movie
 	});
 };
 

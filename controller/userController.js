@@ -29,7 +29,6 @@ function AuthController() {
 					data.email = result.user.email;
 					data.role = result.user.role;
 					const token = jwtGeneration(data);
-					console.log(result);
 					return res.status(result.status).send({
 						data: {
 							...data,
@@ -52,6 +51,12 @@ function AuthController() {
 				return res.redirect('https://rippletv.netlify.com/home');
 			})
 			.catch(error => next(error));
+	};
+
+	this.getUserData = (req, res, next) => {
+		return res.status(200).send({
+			data: req.user
+		});
 	};
 }
 

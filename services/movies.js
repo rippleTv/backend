@@ -1,5 +1,6 @@
 const Movie = require('../model/movie');
 const cloudinary = require('cloudinary');
+const path = require('path');
 
 exports.getMovies = async () => {
 	const movies = await Movie.find();
@@ -19,31 +20,16 @@ exports.addMovie = async (movie, cb) => {
 		eager_async: true
 	};
 
-	// const result = await cloudinary.v2.uploader.explicit(
-	// 	'THE_WEDDING_PARTY',
-	// 	up_options
-	// );
+	const publicId = path.parse(movie.url).name;
+	const result = await cloudinary.v2.uploader.explicit(publicId, up_options);
 
-	cloudinary.v2.uploader.explicit('THE_WEDDING_PARTY', up_options, function(
-		error,
-		result
-	) {
-		cb(result);
-	});
+	movie.dash = result.eager[0].secure_url;
+	movie.bytes = result.bytes;
+	movie.publicId = publicId;
 
-	// console.log(result);
-	// movie.transformation.hls.url = result.transformation.find(
-	// 	t => t.transformation === 'sp_hd/m3u8'
-	// ).secure_url;
-	// movie.transformation.dash.url = result.transformation.find(
-	// 	t => t.transformation === 'sp_hd/mpd'
-	// ).secure_url;
-	// movie.bytes = result.bytes;
-	// movie.publicId = movie.name;
-
-	// const newMovie = new Movie(movie);
-	// await newMovie.save();
-	// return newMovie;
+	const newMovie = new Movie(movie);
+	await newMovie.save();
+	return newMovie;
 };
 
 exports.deleteMovie = async _id => {

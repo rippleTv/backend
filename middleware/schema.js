@@ -28,6 +28,9 @@ exports.movieSchema = Joi.object().keys({
 	poster: Joi.string()
 		.min(4)
 		.required(),
+	category: Joi.string()
+		.min(2)
+		.required(),
 	genre: Joi.string()
 		.min(3)
 		.required(),
