@@ -48,7 +48,7 @@ function AuthController() {
 		const { id } = req.params;
 		verifyUser(id)
 			.then(user => {
-				return res.redirect('https://rippletv.netlify.com/home');
+				return res.redirect('https://rippletv.netlify.com/confirm');
 			})
 			.catch(error => next(error));
 	};
