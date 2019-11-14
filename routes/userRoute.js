@@ -13,5 +13,13 @@ module.exports = () => {
 
 	router.get('/account', authenticate, userCtl.getUserData);
 
+	router.post('/reset-password', userCtl.sendResetPassordMail);
+
+	router.post(
+		'/reset-password/:token',
+		authenticate,
+		userCtl.resetUserPassword
+	);
+
 	return router;
 };

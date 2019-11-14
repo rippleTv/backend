@@ -82,4 +82,45 @@ const verifyUser = _id => {
 		return user;
 	});
 };
-module.exports = { registerUser, loginUser, verifyUser };
+
+const resetUserPassword = async ({ email, password }) => {
+	const user = await User.findOne({ email: email });
+	const result = { user: null };
+	const { error } = User.validatePasswordReset({ password });
+
+	if (error) {
+		result.error = {
+			message: error.details[0].message
+		};
+		return result;
+	}
+	user.password = password;
+	await user.save();
+
+	result.user = user;
+	return result;
+};
+
+const validateUserEmail = email => {
+	const { error } = User.validateMail({ email });
+	console.log(error);
+	if (error) {
+		error.message = error.details[0].message;
+		return error;
+	}
+	return null;
+};
+
+checkIfUserExists = async user => {
+	let found = await User.findOne({ email: user.email });
+	if (found) return true;
+	return false;
+};
+module.exports = {
+	registerUser,
+	loginUser,
+	verifyUser,
+	resetUserPassword,
+	validateUserEmail,
+	checkIfUserExists
+};
