@@ -13,6 +13,9 @@ exports.getAllMovie = async (req, res, next) => {
 exports.getMovie = async (req, res) => {
 	let _id = req.params.id;
 	const movie = await movieServices.getMovieById(_id);
+	console.log('------------------------------------');
+	console.log(movie);
+	console.log('------------------------------------');
 	if (!movie) {
 		return res.status(404).send({
 			message: 'Movie Not found',

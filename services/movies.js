@@ -9,6 +9,10 @@ exports.getMovies = async () => {
 
 exports.getMovieById = async _id => {
 	const movie = await Movie.findOne({ _id });
+	console.log('############# SERVICES ######################');
+	console.log(_id);
+	console.log(movie);
+	console.log('############# SERVICES ######################');
 	return movie;
 };
 

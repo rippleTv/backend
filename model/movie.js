@@ -21,7 +21,7 @@ const moviesSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'The movie category is required']
 	},
-	image: { type: String, required: [true, 'Image of Movie Required'] },
+	image: { type: String },
 	releaseYear: {
 		type: Number,
 		required: [true, 'The release date of the movie is required']
