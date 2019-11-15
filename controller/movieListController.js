@@ -3,7 +3,7 @@ const movieListService = require('../services/movieList');
 function movieListController() {
 	this.AddMovie = async function AddMovie(req, res) {
 		const body = {
-			movieId: req.params.movieId,
+			movieId: req.body.movieId,
 			user: req.user
 		};
 
@@ -38,7 +38,7 @@ function movieListController() {
 
 	this.checkIfMovieIsInList = async function checkIfMovieIsInList(req, res) {
 		let body = {
-			movieId: req.body.movie,
+			movieId: req.params.id,
 			userId: req.user._id
 		};
 		const result = await movieListService.checkIfMovieIsInList(body);
