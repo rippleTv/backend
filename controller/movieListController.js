@@ -3,7 +3,7 @@ const movieListService = require('../services/movieList');
 function movieListController() {
 	this.AddMovie = async function AddMovie(req, res) {
 		const body = {
-			movieId: req.body.movieId,
+			movieId: req.params.movieId,
 			user: req.user
 		};
 
