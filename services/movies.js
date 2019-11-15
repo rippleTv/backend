@@ -8,7 +8,7 @@ exports.getMovies = async () => {
 };
 
 exports.getMovieById = async _id => {
-	const movie = await Movie.findById(_id);
+	const movie = await Movie.findOne({ _id });
 	return movie;
 };
 

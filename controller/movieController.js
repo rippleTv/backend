@@ -4,15 +4,17 @@ const movieServices = require('../services/movies');
 //Get all the movies
 exports.getAllMovie = async (req, res, next) => {
 	const movies = await movieServices.getMovies();
-	return movies;
+	return res.status(200).send({
+		data: movies
+	});
 };
 
 //Get one movie
 exports.getMovie = async (req, res) => {
 	let _id = req.params.id;
-	const movie = await movieServices.getMovies(_id);
+	const movie = await movieServices.getMovieById(_id);
 	if (!movie) {
-		return res.status(404).res.send({
+		return res.status(404).send({
 			message: 'Movie Not found',
 			error: null
 		});

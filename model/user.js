@@ -3,7 +3,13 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const uuidv4 = require("uuid/v4");
 
-const { schemaForLogin, schemaForSignup } = require("./schema");
+const {
+	schemaForLogin,
+	schemaForSignup,
+	schemaForEmailValidation,
+	schemaForPasswordReset
+} = require('./schema');
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -60,8 +66,16 @@ userSchema.statics.joiValidate = function(obj) {
   return Joi.validate(obj, schemaForSignup);
 };
 
+userSchema.statics.validatePasswordReset = function(obj) {
+	return Joi.validate(obj, schemaForPasswordReset);
+};
+
 userSchema.statics.joiValidateLogin = function(obj) {
   return Joi.validate(obj, schemaForLogin);
+};
+
+userSchema.statics.validateMail = function(obj) {
+	return Joi.validate(obj, schemaForEmailValidation);
 };
 
 userSchema.methods.comparePassword = function(plainPassword) {
