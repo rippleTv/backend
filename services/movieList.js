@@ -14,7 +14,7 @@ exports.addToMovieList = async body => {
 };
 
 exports.getMovieList = async id => {
-	const movies = await movieList.find({ user: id }).populate('movies');
+	const movies = await movieList.find({ user: id }).populate('movie');
 	return movies;
 };
 
