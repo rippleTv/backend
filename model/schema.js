@@ -30,7 +30,8 @@ const schemaForSignup = {
     .required()
 };
 
+
 module.exports = {
   schemaForLogin,
-  schemaForSignup
+  schemaForSignup,
 };

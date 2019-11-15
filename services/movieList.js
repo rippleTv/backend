@@ -18,6 +18,11 @@ exports.getMovieList = async id => {
   return movies;
 };
 
+exports.checkIfMovieIsInList = async ({ userId, movieId }) => {
+  const movie = await movieList.findOne({ user: userId, _id: movieId });
+  return movie;
+};
+
 exports.deleteFromMovieList = async body => {
   const deletedMovie = await movieList.findOneAndDelete({
     movie: body.movieId,

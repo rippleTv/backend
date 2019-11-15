@@ -35,6 +35,18 @@ function movieListController() {
       data: result
     });
   };
+
+  this.checkIfMovieIsInList = async function checkIfMovieIsInList(req, res) {
+    let body = {
+      movieId: req.body.movie,
+      userId: req.user._id
+    }
+    const result = await movieListService.checkIfMovieIsInList(body);
+    return res.status(200).send({
+      message: "Request successful",
+      data: result
+    });
+  }
 }
 
 module.exports = movieListController;

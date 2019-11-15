@@ -9,6 +9,7 @@ module.exports = () => {
   router.get("/all", authenticate, movieListCtl.GetAllMovies);
   router.post("/addtoList", authenticate, movieListCtl.AddMovie);
   router.delete("/:id", authenticate, movieListCtl.deleteFromMovieList);
+  router.get("/:id", authenticate, movieListCtl.checkIfMovieIsInList);
 
   return router;
 };
