@@ -40,5 +40,5 @@ exports.sendResetPasswordMail = function sendResetPasswordMail({
 
 	console.log('EMAIL WAS SENT SUCCESSFULLY');
 
-	// sgMail.send(msg);
+	sgMail.send(msg);
 };
