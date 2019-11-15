@@ -1,6 +1,18 @@
-const { registerUser, loginUser, verifyUser } = require('../services/user');
+const {
+	registerUser,
+	loginUser,
+	verifyUser,
+	resetUserPassword,
+	validateUserEmail,
+	checkIfUserExists
+} = require('../services/user');
 const { jwtGeneration } = require('../util/token');
-const { sendConfirmEmailMessage } = require('../services/mailer');
+const {
+	sendConfirmEmailMessage,
+	sendResetPasswordMail
+} = require('../services/mailer');
+
+const { passwordJWT } = require('../util/token');
 
 function AuthController() {
 	this.registerUser = async (req, res, next) => {
@@ -48,7 +60,7 @@ function AuthController() {
 		const { id } = req.params;
 		verifyUser(id)
 			.then(user => {
-				return res.redirect('https://rippletv.netlify.com/home');
+				return res.redirect('https://rippletv.netlify.com/confirm');
 			})
 			.catch(error => next(error));
 	};
@@ -56,6 +68,51 @@ function AuthController() {
 	this.getUserData = (req, res, next) => {
 		return res.status(200).send({
 			data: req.user
+		});
+	};
+
+	this.sendResetPassordMail = async (req, res, next) => {
+		const { email } = req.body;
+		const error = validateUserEmail(email);
+
+		if (error) {
+			return res.status(401).send({
+				message: error.message
+			});
+		}
+
+		const user = await checkIfUserExists({ email });
+		const token = passwordJWT(email);
+		if (user) {
+			await sendResetPasswordMail({ token, email });
+		}
+
+		return res.status(200).send({
+			message: 'Password Reset Mail send'
+		});
+	};
+
+	this.resetUserPassword = async (req, res, next) => {
+		const { user, error } = await resetUserPassword({
+			email: req.user.email,
+			password: req.body.password
+		});
+
+		if (error) {
+			return res.status(401).send({
+				message: error.message,
+				error
+			});
+		}
+
+		if (!user) {
+			return res.status(404).send({
+				message: 'Password Reset Failed. User not found'
+			});
+		}
+
+		return res.status(200).send({
+			message: 'Password Reset was successful'
 		});
 	};
 }

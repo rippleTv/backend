@@ -21,3 +21,24 @@ exports.sendConfirmEmailMessage = function sendConfirmEmailMessage(user) {
 
 	sgMail.send(msg);
 };
+
+exports.sendResetPasswordMail = function sendResetPasswordMail({
+	email,
+	token
+}) {
+	const passwordResetLink = `https://rippletv.netlify.com/resetpassword/${token}`;
+	const html = readFileSync(`${emailDir}/reset-password.html`)
+		.toString()
+		.replace(/{{PASSWORD}}/, passwordResetLink);
+
+	const msg = {
+		to: email,
+		from: 'support@rippletv.com',
+		subject: 'Reset RippleTv Password',
+		html
+	};
+
+	console.log('EMAIL WAS SENT SUCCESSFULLY');
+
+	sgMail.send(msg);
+};
